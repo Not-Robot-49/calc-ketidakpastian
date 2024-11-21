@@ -1,41 +1,11 @@
 #include <iostream>
 #include <limits>
-#include <cmath>
 
 using namespace std;
-
-//TODO bikin kelas akurat desimal >_<
-//Accurate decimal so we doesnt need to deal with FLOATING POINT PRECISION ERROR 
-class accurateDecimal {
-private:
-    int integer;
-    int decimal;
-    int scale;
-
-public:
-    // Constructor to initialize from a float
-    accurateDecimal(float value, int precision = 4) {
-        // Scale factor based on desired precision
-        scale = precision;
-        integer = static_cast<int>(value);
-        
-        // Convert fractional part to integer based on scale
-        float fraction = std::fabs(value - integer);
-        decimal = static_cast<int>(std::round(fraction * std::pow(10, scale)));
-    }
-};
-
 
 void welcome();
 int get_Int(string errorMessage, int min, int max);
 float get_Float(string errorMessage);
-
-//TODO bikin nih 4 fungsi
-accurateDecimal convert_Float_To_AD(float input);
-float hitung_Ketidakpastian(int banyakPengukuran, float pengukuran[]);
-float standard_Deviation_Sample(int banyakPengukuran, float pengukuran[]);
-void bubble_Sort(float pengukuran[], float &terkecil, float &terbesar);
-
 float hitung_Waktu(bool berulang);
 float hitung_Jumlah_Zat(bool berulang);
 float hitung_Panjang(bool berulang);
@@ -43,7 +13,7 @@ float hitung_intensitas_Cahaya(bool berulang);
 float hitung_Kuat_Arus(bool berulang);
 float hitung_Suhu(bool berulang);
 float hitung_Massa(bool berulang);
- 
+
 //test github
 //±
 int main() {
@@ -178,9 +148,7 @@ float get_Float(string errorMessage) {
 }
 
 float hitung_Waktu(bool berulang) {
-    int banyakPengukuran;
-    float ketidakpastian = 0;
-
+    float skalaKecil = 0;
     cout << "Pilih alat pengukuran\n";
     cout << "1. Stopwatch digital\n";
     cout << "2. Stopwatch analog\n";
@@ -188,29 +156,12 @@ float hitung_Waktu(bool berulang) {
     int alat = get_Int("Masukkan angka 1-2: ", 1, 2);
     cout << endl;
 
-    if (berulang) {
-        banyakPengukuran = get_Int("Banyak pengukuran: ", 1, INT_MAX);
-    } else {
-        banyakPengukuran = 1;
-    }
-    
-
-    float hasilPengukuran[banyakPengukuran];
-    
-    for (int i = 0; i < banyakPengukuran; i++)
-    {
-        hasilPengukuran[i] = get_Float("Hasil Pengukuran: ");
-    }
- 
-    //Ga butuh lagi kayaknya
-    /*
-    ketidakpastian = get_Float("Masukkan skala terkecilnya dalam sekon: ");
+    skalaKecil = get_Float("Masukkan skala terkecilnya dalam sekon: ");
     cout << endl;
-    */
 
     switch (alat) {
         case 1:
-            
+            //Hitung  Stopwatch digital
             break;
         case 2:
             // Hitung stopwatch analog
