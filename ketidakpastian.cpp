@@ -14,6 +14,7 @@
 using namespace std;
 
 void home() {
+    cout << "----------CALC-KETIDAKPASTIAN----------" << endl;
     cout << "1. Ketidakpastian Tunggal" << endl;
     cout << "2. Ketidakpastian Berulang" << endl;
     cout << "3. Ketidakpastian Gabungan" << endl;
@@ -53,7 +54,7 @@ int main() {
     while (menuPengukuran != 6) {
 
         home();
-        menuPengukuran = get_Int("Masukkan angka 1-6: ", 1, 6);
+        menuPengukuran = get_Int("Masukkan angka 1-6:", 1, 6);
         cout << "" << endl;
 
         // Menu Pengukuran
@@ -62,13 +63,13 @@ int main() {
         case 1: 
             //* Pengertian
             cout << "Ketidakpastian yang dihasilkan dari 1 kali pengukuran\n";
-            cout << "Rumus: setengah nilai skala terkecil alat ukut yang digunakan\n";
+            cout << Color::BLUE << "Rumus: " << Color::RESET << "1/2 skala terkecil alat ukut yang digunakan\n";
 
             // Digital (1), Analog (2)
             int skala;
-            skala = get_Int("Digital/Analog (1/2): ", 1, 2);
-            get_String_Num("Nilai: ", strValue, &angkaPenting, NULL, &value);
-            get_String_Num("Skala terkecil: ", strKetidakpastian, NULL, &presisi, NULL);
+            skala = get_Int("Digital/Analog (1/2):", 1, 2);
+            get_String_Num("Nilai:", strValue, &angkaPenting, NULL, &value);
+            get_String_Num("Skala terkecil:", strKetidakpastian, NULL, &presisi, NULL);
             value = stold(strValue);
             ketidakpastian = stold(strKetidakpastian);
 
@@ -86,7 +87,8 @@ int main() {
             if (stold(strKetidakpastian) < ketidakpastian) {
                 ketidakpastian = stold(strKetidakpastian);
             }
-            cout << fixed << setprecision(hitung_Presisi(strKetidakpastian, 0)) << Color::BOLD << Color::BLUE << value << Color::RESET << Color::BOLD << " +- " << Color::RED << ketidakpastian << Color::RESET << endl;
+            cout << endl;
+            cout << Color::BG_BLUE << "Dilaporkan:" << Color::RESET << " " << fixed << setprecision(hitung_Presisi(strKetidakpastian, 0)) << Color::BOLD << Color::UNDERLINE << Color::BLUE << value << Color::RESET << Color::BOLD << Color::UNDERLINE << " +- " << Color::RED << ketidakpastian << Color::RESET << endl;
             break;
         
         // Ketidakpastian Berulang
@@ -96,12 +98,13 @@ int main() {
             cout << "Ada 2 cara untuk menghitung ketidakpastian berulang\n";
 
             // get_String_Num("Skala terkecil: ", strKetidakpastian, NULL, &presisi, NULL);
-            vectorValue = get_Multiple_Long_Double("Masukkan hasil pengukuran dipisahkan spasi: ");
+            vectorValue = get_Multiple_Long_Double("Masukkan hasil pengukuran dipisahkan spasi:");
             
             cout << Color::BOLD << Color::GREEN << endl << "Hasil: " << Color::RESET << endl;
+            cout << endl;
             
             // Range
-            cout << "Range: " << endl;
+            cout << Color::CYAN << "Range" << Color::RESET << endl;
             cout << "Range: rerata          = (nilai max + nilai min) / 2\n";
             cout << "Range: ketidakpastian  = (nilai max - nilai min) / 2\n";
             ketidakpastianRange = range(vectorValue, &rerataRange);
@@ -110,10 +113,12 @@ int main() {
             pembulatan_AP(strKetidakpastian, 1);
             presisi = hitung_Presisi(strKetidakpastian, 0);
 
-            cout << fixed << setprecision(presisi) << Color::BOLD <<Color::BLUE << rerataRange << Color::RESET << " +- " << Color::BOLD << Color::RED << ketidakpastianRange << Color::RESET << endl;
-            
+            cout << Color::BG_BLUE << "Dilaporkan:" << Color::RESET << " " << fixed << setprecision(presisi) << Color::BOLD << Color::UNDERLINE <<Color::BLUE << rerataRange << Color::RESET << Color::BOLD << " +- " << Color::BOLD << Color::RED << ketidakpastianRange << Color::RESET << endl;
+            cout << endl;
+
+
             // Deviasi
-            cout << "Standar deviasi sampel: " << endl;
+            cout << Color::CYAN << "Standar deviasi sampel: " << Color::RESET << endl;
             cout << "Deviasi: rerata            = Jumlah Data /  Banyak Data\n";
             cout << "Deviasi: ketidakpastian    = sqrt((1/Banyak Data - 1)*(Jumlah Data * Jumlah Data))\n";
             ketidakpastianDeviasi = standart_Deviation_Sample(vectorValue, &rerataDeviasi);
@@ -122,7 +127,7 @@ int main() {
             pembulatan_AP(strKetidakpastian, 1);
             presisi = hitung_Presisi(strKetidakpastian, 0);
 
-            cout << fixed << setprecision(presisi) << Color::BOLD << Color::BLUE << rerataDeviasi << Color::RESET << Color::BOLD << " +- " << Color::RED << ketidakpastianDeviasi << Color::RESET << endl;
+            cout << Color::BG_BLUE << "Dilaporkan:" << Color::RESET << " " << fixed << setprecision(presisi) << Color::BOLD << Color::UNDERLINE << Color::BLUE << rerataDeviasi << Color::RESET << Color::BOLD << " +- " << Color::RED << ketidakpastianDeviasi << Color::RESET << endl;
             break;
         
         // Ketidakpastian gabungan
@@ -138,24 +143,32 @@ int main() {
             cout << "Aturan angka penting: semua angka penting kecuali\n";
             cout << "1. Angka nol di kiri tidak penting\n";
             cout << "2. Angka nol di kanan tidak penting, tapi angka nol desimal di kanan penting\n";
-            get_String_Num("Angka Penting: ", strValue, &angkaPenting, &presisi, &value);
+            get_String_Num("Angka Penting:", strValue, &angkaPenting, &presisi, &value);
 
-            cout << "Angka Penting: " << Color::BOLD << Color::BLUE << angkaPenting << Color::RESET << endl; 
-            cout << "Presisi: " << Color::BOLD <<Color::GREEN << presisi << Color::RESET << " angka dibelakang koma" << endl;
+            cout << Color::BG_BLUE <<  "Angka Penting:" << Color::RESET << " " << Color::BOLD << Color::BLUE << angkaPenting << Color::RESET << endl; 
+            cout << Color::BG_BLUE << "Presisi:" << Color::RESET << " " << Color::BOLD <<Color::GREEN << presisi << Color::RESET << " angka dibelakang koma" << endl;
             break;
 
         case 5:
-            cout << "Tutorial: " << endl;
-            cout << "Docs: github.com/not-robot-49/calc-ketidakpastian" << endl;
-            cout << "YT: link youtube" << endl;
-            cout << endl << "Made by Daffa Satya (Creator) & Raihan Altaf (Co Creator)" << endl;
-            cout << "Contact: " << endl << "ig: @rhn.alt / @sat1rya" << endl << "github: github.com/not-robot-49 atau github.com/badutpenusuk" << endl;
+            cout << Color::BG_CYAN << "Tutorial: " << Color::RESET << endl;
+            cout << "Docs & Source: " << Color::UNDERLINE << "github.com/not-robot-49/calc-ketidakpastian" << Color::RESET << endl;
+            cout << "YT: " << Color::UNDERLINE << "link youtube" << Color::RESET << endl;
+
+
+            cout << endl << Color::BG_CYAN << "Made With love <3 and glued with hope by" << Color::RESET << endl;
+            cout << "Daffa Satya (Creator) , Raihan Altaf (Co Creator), & Joshua Leonardo (Co Creator)" << endl;
+            cout << endl;
+
+            cout << Color::BG_CYAN << "Contact: " << Color::RESET << endl; 
+            cout << "ig: " << Color::UNDERLINE << "@sat1rya" << Color::RESET << " / " << Color::UNDERLINE << "@rhn.alt" << Color::RESET << endl;
+            cout << "github: " << Color::UNDERLINE << "github.com/not-robot-49" << Color::RESET << " atau " << Color::UNDERLINE << "github.com/badutpenusuk" << Color::RESET << endl;
             cout << "" << endl;
         default:
             break;
         }
         cout << endl;
     }
-    cout << Color::RESET;
+    cout << "----------Terimakasih :)---------------";
+    cout << Color::RESET << endl;
     return 0;
 }

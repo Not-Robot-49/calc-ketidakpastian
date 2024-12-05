@@ -4,7 +4,7 @@
 #include <limits>
 
 int get_Int(std::string errorMessage, int min, int max) {
-    std::cout << Color::BG_GREEN << errorMessage << Color::RESET;
+    std::cout << Color::BG_GREEN << errorMessage << Color::RESET << " ";
     int output = 0;
 
     //Angka min adalah kode rahasia biar min max nya ga ada 
@@ -18,7 +18,7 @@ int get_Int(std::string errorMessage, int min, int max) {
         std::cin >> output;
 
         if (std::cin.fail() || (min > output || output > max)) {
-            std::cout << errorMessage;
+            std::cout << Color::BG_GREEN << errorMessage << Color::RESET << " ";
 
             // Clear the failbit and ignore the remaining input
             std::cin.clear();
@@ -36,12 +36,12 @@ long double get_Long_Double(std::string errorMessage) {
     long double output = 0;
     bool validInput = false;
 
-    std::cout << Color::BG_GREEN << errorMessage << Color::RESET;
+    std::cout << Color::BG_GREEN << errorMessage << Color::RESET << " ";
     while (!validInput) {
         std::cin >> output;
 
         if (std::cin.fail()) {
-            std::cout << errorMessage;
+            std::cout << Color::BG_GREEN << errorMessage << Color::RESET << " ";
 
             // Clear the failbit and ignore the remaining input
             std::cin.clear();
@@ -63,7 +63,7 @@ std::vector<long double> get_Multiple_Long_Double(std::string errorMessage) {
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
     // Get all float values in one input
-    std::cout << Color::BG_GREEN << errorMessage << Color::RESET << std::endl;
+    std::cout << Color::BG_GREEN << errorMessage << Color::RESET << " ";
     std::getline(std::cin, input);
 
     // Use stringstream to parse the input
@@ -90,14 +90,14 @@ void get_String_Num(std::string errorMessage, std::string &output, int *ptrAngka
     // Zero after the fisrt non-zero number and before decimal or another non-zero number
     int zeroUntilDecimal = 0;
 
-    std::cout<< Color::BG_GREEN << errorMessage << Color::RESET;
+    std::cout << Color::BG_GREEN << errorMessage << Color::RESET << " ";
     std::cin >> output;
     for (int i = 0; output[i] != '\0' || i == 0; i++) {
         // Cek Input
         if(!inputValid || (!isdigit(output[i]) && output[i] !='.')) {
             output.clear();
 
-            std::cout << errorMessage;
+            std::cout << Color::BG_GREEN << errorMessage << Color::RESET << " ";
             std::cin >> output;
             i = 0;
             inputValid = true;

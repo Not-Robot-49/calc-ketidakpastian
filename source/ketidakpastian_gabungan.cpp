@@ -164,15 +164,17 @@ UncertainValue evaluateExpression(const std::string& expression) {
 // Function to calculate uncertainty for combined measurements
 void calculateUncertaintyCombined() {
     std::string input;
-    std::cout << "Masukkan ketidakpastian gabungan (e.g., 123+-0.1*3): \n";
+    std::cout << "Penggunaan fungsi:\n";
     std::cout << "2 Pangkat 3 = pow(2, 3)\n";
     std::cout << "Akar = sqrt(angka)\n";
+    std::cout << Color::BG_GREEN << "Masukkan ketidakpastian gabungan (e.g., 123+-0.1*3): " << Color::RESET << std::endl;
     std::cin.ignore();
     std::getline(std::cin, input);
 
     try {
         UncertainValue result = evaluateExpression(input);
-        std::cout << "Result: " << Color::BOLD << Color::BLUE << result.first << Color::RESET << "+-" << Color::RED << result.second << Color::RESET << std::endl;
+        std::cout << std::endl;
+        std::cout << Color::BG_BLUE << "Dilaporkan:" << Color::RESET << " " << Color::BOLD << Color::BLUE << Color::UNDERLINE << result.first << Color::RESET << Color::BOLD << Color::UNDERLINE << " +- " << Color::RED << result.second << Color::RESET << std::endl;
     } catch (const std::exception& ex) {
         std::cerr << Color::BG_RED << "Error: " << ex.what() << Color::RESET << std::endl;
     }
