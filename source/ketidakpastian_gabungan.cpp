@@ -6,8 +6,11 @@
 #include <stdexcept>
 #include <cstring>
 #include <algorithm>
+#include <string>
+#include <iomanip>
 #include "ketidakpastian_gabungan.h"
 #include "warna.h"
+#include "pembulatan_dan_ap.h"
 
 // Type alias defined in the header file
 using UncertainValue = std::pair<double, double>;
@@ -27,29 +30,35 @@ int precedence(char op) {
 // Function to apply an operator to two uncertain values
 UncertainValue applyOperation(const UncertainValue& a, const UncertainValue& b, char op) {
     double value = 0, uncertainty = 0;
+
     switch (op) {
-        case '+': 
+        case '+':
             value = a.first + b.first;
-            uncertainty = a.second + b.second;
+            uncertainty = a.second + b.second; // Add uncertainties
             break;
-        case '-': 
+        case '-':
             value = a.first - b.first;
-            uncertainty = a.second + b.second;
+            uncertainty = a.second + b.second; // Add uncertainties
             break;
-        case '*': 
+        case '*':
             value = a.first * b.first;
-            uncertainty = std::sqrt(std::pow(b.first * a.second, 2) + std::pow(a.first * b.second, 2));
+            uncertainty = a.second / a.first + b.second / b.first; // Relative uncertainties
+            uncertainty *= value; // Convert to absolute uncertainty
             break;
-        case '/': 
+        case '/':
             if (b.first == 0) throw std::runtime_error("Pembagian dengan nol!");
             value = a.first / b.first;
-            uncertainty = std::sqrt(std::pow(b.first * a.second, 2) + std::pow(a.first * b.second, 2)) / (b.first * b.first);
+            uncertainty = a.second / a.first + b.second / b.first; // Relative uncertainties
+            uncertainty *= value; // Convert to absolute uncertainty
             break;
         default:
             throw std::runtime_error("Operator tidak valid!");
     }
+
     return {value, uncertainty};
 }
+
+
 
 // Function to evaluate functions like sqrt or pow
 UncertainValue evaluateFunction(const std::string& func, const std::string& args) {
@@ -57,7 +66,7 @@ UncertainValue evaluateFunction(const std::string& func, const std::string& args
         UncertainValue arg = evaluateExpression(args);
         if (arg.first < 0) throw std::runtime_error("Akar jangan negatif ya!");
         double value = std::sqrt(arg.first);
-        double uncertainty = arg.second / (2 * value);
+        double uncertainty = 0.5 * arg.second / arg.first * value; // Simplified propagation
         return {value, uncertainty};
     } else if (func == "pow") {
         size_t commaPos = args.find(',');
@@ -65,14 +74,14 @@ UncertainValue evaluateFunction(const std::string& func, const std::string& args
         UncertainValue base = evaluateExpression(args.substr(0, commaPos));
         UncertainValue exp = evaluateExpression(args.substr(commaPos + 1));
         double value = std::pow(base.first, exp.first);
-        double relativeUncertainty = std::sqrt(
-            std::pow(exp.first * base.second / base.first, 2) + 
-            std::pow(std::log(base.first) * exp.second, 2)
-        );
+
+        // Simplified propagation formula for power
+        double relativeUncertainty = exp.first * base.second / base.first;
         return {value, relativeUncertainty * value};
     }
     throw std::runtime_error("Fungsi tak diketahui: " + func);
 }
+
 
 // Function to evaluate an expression
 UncertainValue evaluateExpression(const std::string& expression) {
@@ -173,8 +182,21 @@ void calculateUncertaintyCombined() {
 
     try {
         UncertainValue result = evaluateExpression(input);
+        
+        if (result.second == 0) {
+            std::cout << std::endl;
+            std::cout << Color::BG_BLUE << "Dilaporkan:" << Color::RESET << " " << Color::BOLD << Color::BLUE << Color::UNDERLINE << result.first << Color::RESET << Color::BOLD << Color::UNDERLINE << " +- " << Color::RED << result.second << Color::RESET << std::endl;
+            return;
+        }
+
+        std::string strValueResult = std::to_string(result.first);
+        std::string strUncertaintyResult = std::to_string(result.second);
+
+        pembulatan_AP(strUncertaintyResult, 1);
+        pembulatan_Presisi(strValueResult, hitung_Presisi(strUncertaintyResult, INT_MIN));
+  
         std::cout << std::endl;
-        std::cout << Color::BG_BLUE << "Dilaporkan:" << Color::RESET << " " << Color::BOLD << Color::BLUE << Color::UNDERLINE << result.first << Color::RESET << Color::BOLD << Color::UNDERLINE << " +- " << Color::RED << result.second << Color::RESET << std::endl;
+        std::cout << Color::BG_BLUE << "Dilaporkan:" << Color::RESET << " " << Color::BOLD << Color::BLUE << Color::UNDERLINE << strValueResult << Color::RESET << Color::BOLD << Color::UNDERLINE << " +- " << Color::RED << strUncertaintyResult << Color::RESET << std::endl;
     } catch (const std::exception& ex) {
         std::cerr << Color::BG_RED << "Error: " << ex.what() << Color::RESET << std::endl;
     }

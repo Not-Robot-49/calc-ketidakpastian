@@ -14,7 +14,9 @@
 using namespace std;
 
 void home() {
-    cout << "----------CALC-KETIDAKPASTIAN----------" << endl;
+    cout << "---------------CALC-KETIDAKPASTIAN---------------" << endl;
+    cout << Color::RED << Color::BOLD << "NOTE: " << Color::RESET << "Tidak 100% akurat jadi cek ulang hasilnya\n";
+    cout << Color::RED << Color::BOLD << "NOTE: " << Color::RESET << "Desimal menggunakan titik contoh: (3.14)\n";
     cout << "1. Ketidakpastian Tunggal" << endl;
     cout << "2. Ketidakpastian Berulang" << endl;
     cout << "3. Ketidakpastian Gabungan" << endl;
@@ -113,7 +115,7 @@ int main() {
             pembulatan_AP(strKetidakpastian, 1);
             presisi = hitung_Presisi(strKetidakpastian, 0);
 
-            cout << Color::BG_BLUE << "Dilaporkan:" << Color::RESET << " " << fixed << setprecision(presisi) << Color::BOLD << Color::UNDERLINE <<Color::BLUE << rerataRange << Color::RESET << Color::BOLD << " +- " << Color::BOLD << Color::RED << ketidakpastianRange << Color::RESET << endl;
+            cout << Color::BG_BLUE << "Dilaporkan:" << Color::RESET << " " << fixed << setprecision(presisi) << Color::BOLD << Color::UNDERLINE <<Color::BLUE << rerataRange << Color::RESET << Color::BOLD << Color::UNDERLINE << " +- " << Color::BOLD << Color::RED << ketidakpastianRange << Color::RESET << endl;
             cout << endl;
 
 
@@ -127,7 +129,7 @@ int main() {
             pembulatan_AP(strKetidakpastian, 1);
             presisi = hitung_Presisi(strKetidakpastian, 0);
 
-            cout << Color::BG_BLUE << "Dilaporkan:" << Color::RESET << " " << fixed << setprecision(presisi) << Color::BOLD << Color::UNDERLINE << Color::BLUE << rerataDeviasi << Color::RESET << Color::BOLD << " +- " << Color::RED << ketidakpastianDeviasi << Color::RESET << endl;
+            cout << Color::BG_BLUE << "Dilaporkan:" << Color::RESET << " " << fixed << setprecision(presisi) << Color::BOLD << Color::UNDERLINE << Color::BLUE << rerataDeviasi << Color::RESET << Color::BOLD << Color::UNDERLINE << " +- " << Color::RED << ketidakpastianDeviasi << Color::RESET << endl;
             break;
         
         // Ketidakpastian gabungan
@@ -150,25 +152,27 @@ int main() {
             break;
 
         case 5:
-            cout << Color::BG_CYAN << "Tutorial: " << Color::RESET << endl;
+            cout << Color::BG_CYAN << "Tutorial:" << Color::RESET << endl;
             cout << "Docs & Source: " << Color::UNDERLINE << "github.com/not-robot-49/calc-ketidakpastian" << Color::RESET << endl;
             cout << "YT: " << Color::UNDERLINE << "link youtube" << Color::RESET << endl;
 
 
             cout << endl << Color::BG_CYAN << "Made With love <3 and glued with hope by" << Color::RESET << endl;
             cout << "Daffa Satya (Creator) , Raihan Altaf (Co Creator), & Joshua Leonardo (Co Creator)" << endl;
+            cout << Color::YELLOW << Color::BOLD << "-----(7027)-----" << Color::RESET << endl;
             cout << endl;
 
-            cout << Color::BG_CYAN << "Contact: " << Color::RESET << endl; 
-            cout << "ig: " << Color::UNDERLINE << "@sat1rya" << Color::RESET << " / " << Color::UNDERLINE << "@rhn.alt" << Color::RESET << endl;
+            cout << Color::BG_CYAN << "Contact:" << Color::RESET << endl; 
+            cout << "ig: " << Color::BLUE << "@sat1rya" << Color::RESET << " / " << Color::BLUE << "@rhn.alt" << Color::RESET << " / " << Color::BLUE << "@joshua_leonardo_" << Color::RESET << endl;
             cout << "github: " << Color::UNDERLINE << "github.com/not-robot-49" << Color::RESET << " atau " << Color::UNDERLINE << "github.com/badutpenusuk" << Color::RESET << endl;
-            cout << "" << endl;
+            
+            cout << endl << Color::BG_MAGENTA << "Total hampir 1000 baris kode, walawe" << Color::RESET << endl << endl;
         default:
             break;
         }
         cout << endl;
     }
-    cout << "----------Terimakasih :)---------------";
+    cout << "---------------Terimakasih :)--------------------";
     cout << Color::RESET << endl;
     return 0;
 }
