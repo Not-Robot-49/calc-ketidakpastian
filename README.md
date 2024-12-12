@@ -1,6 +1,8 @@
 # Calc Ketidakpastian
-Kalkulator penghitung ketidakpastian pengukuran fisika
+Kalkulator penghitung ketidakpastian pengukuran fisika untuk projek fisika pak Ikhwan.
 
-TODO:
-1. Banyak banget ga bisa di list :(
-2. Ngitung ketidakpastian susah karena yang sudah pasti ya aku bersamamu
+Dapat menghitung:
+1. Ketidakpastian tunggal
+2. Ketidakpastian berulang
+3. Ketidakpastian gabungan
+4. Angka penting
