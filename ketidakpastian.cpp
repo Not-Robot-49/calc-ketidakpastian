@@ -16,7 +16,7 @@ using namespace std;
 void home() {
     cout << "---------------CALC-KETIDAKPASTIAN---------------" << endl;
     cout << Color::RED << Color::BOLD << "NOTE: " << Color::RESET << "Tidak 100% akurat jadi cek ulang hasilnya\n";
-    cout << Color::RED << Color::BOLD << "NOTE: " << Color::RESET << "Desimal menggunakan titik contoh: (3.14)\n";
+    cout << Color::RED << Color::BOLD << "NOTE: " << Color::RESET << "Desimal menggunakan titik contoh: 3.14\n";
     cout << "1. Ketidakpastian Tunggal" << endl;
     cout << "2. Ketidakpastian Berulang" << endl;
     cout << "3. Ketidakpastian Gabungan" << endl;

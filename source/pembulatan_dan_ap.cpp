@@ -61,7 +61,7 @@ void pembulatan_AP(std::string &s, int jumlahAP) {
     // Jika ada desimal hapus desimal tambahin di akhir program
     int letakDesimal = s.find('.');
     int i = s.length() - 1;
-    size_t rightZero = 0;
+    int rightZero = 0;
 
     if (letakDesimal != std::string::npos) {
         s.erase(s.begin() + letakDesimal);
@@ -71,7 +71,7 @@ void pembulatan_AP(std::string &s, int jumlahAP) {
     
     if (s.length() > 1) {
         rightZero = (s.length() - i) - 1;
-        s.erase(i + 1);
+        if (i + 1 < s.length()) s.erase(i + 1);
     }
 
     // Ulangi hingga angka pentingnya sama dengan jumlah AP
@@ -149,6 +149,10 @@ void pembulatan_AP(std::string &s, int jumlahAP) {
 
 void pembulatan_Presisi(std::string &s, int presisi) {
 
+
+
+
+
     int letakDesimal = s.find('.');
     int i = 0;
     
@@ -225,4 +229,8 @@ void pembulatan_Presisi(std::string &s, int presisi) {
 
     if (presisi < 1 && s[letakDesimal - 1] != '0') s.erase(letakDesimal);
     else if (presisi < 1 && s[letakDesimal - 1] == '0') s.erase(letakDesimal + 1);
+
+    while (hitung_Presisi(s, INT_MIN) > presisi && presisi > 0) {
+        s.pop_back();
+    }
 }
