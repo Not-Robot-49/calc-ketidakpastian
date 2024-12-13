@@ -28,32 +28,34 @@ void home() {
 int main() {
     // Menu pengukuran
     int menuPengukuran = 0;
-    // Variabel untuk menyimpan angka penting 
-    int angkaPenting = 0;
-    // Berapa desimal presisinya, "+" untuk dibelakang ".", "-" untuk di depan "."
-    int presisi = 0;
-    // Nilai pengukuran (jika pengukuran banyak maka ini nilai reratanya)
-    long double value = 0;
-    // Ketidakpastiannya
-    long double ketidakpastian = 0;
-    // Nilai pengukuran dalam string
-    string strValue;
-    // Nilai ketidakpastian dalam string
-    string strKetidakpastian;
-
-    // Buat pengukuran lebih dari 1 kali
-    // Buat deviasi (Cara 2)
-    long double rerataDeviasi = 0;
-    long double ketidakpastianDeviasi = 0;
-    // Buat range (cara 1)
-    long double rerataRange = 0;
-    long double ketidakpastianRange = 0;
-
-    // Vector buat pengukuran lebih dari 1 kali
-    vector<long double> vectorValue;
-    vector<string> vcrStrValue;
 
     while (menuPengukuran != 6) {
+        
+        // Variabel untuk menyimpan angka penting 
+        int angkaPenting = 0;
+        // Berapa desimal presisinya, "+" untuk dibelakang ".", "-" untuk di depan "."
+        int presisi = 0;
+        // Nilai pengukuran (jika pengukuran banyak maka ini nilai reratanya)
+        long double value = 0;
+        // Ketidakpastiannya
+        long double ketidakpastian = 0;
+        // Nilai pengukuran dalam string
+        string strValue;
+        // Nilai ketidakpastian dalam string
+        string strKetidakpastian;
+
+        // Buat pengukuran lebih dari 1 kali
+        // Buat deviasi (Cara 2)
+        long double rerataDeviasi = 0;
+        long double ketidakpastianDeviasi = 0;
+        // Buat range (cara 1)
+        long double rerataRange = 0;
+        long double ketidakpastianRange = 0;
+
+        // Vector buat pengukuran lebih dari 1 kali
+        vector<long double> vectorValue;
+        vector<string> vcrStrValue;
+
 
         home();
         menuPengukuran = get_Int("Masukkan angka 1-6:", 1, 6);
@@ -106,9 +108,9 @@ int main() {
             cout << endl;
             
             // Range
-            cout << Color::CYAN << "Range" << Color::RESET << endl;
-            cout << "Range: rerata          = (nilai max + nilai min) / 2\n";
-            cout << "Range: ketidakpastian  = (nilai max - nilai min) / 2\n";
+            cout << Color::CYAN << "Metode Nilai Tengah" << Color::RESET << endl;
+            cout << "Nilai Tengah   =   (nilai max + nilai min) / 2\n";
+            cout << "Ketidakpastian =   (nilai max - nilai min) / 2\n";
             ketidakpastianRange = range(vectorValue, &rerataRange);
 
             strKetidakpastian = to_string(ketidakpastianRange);
@@ -120,9 +122,9 @@ int main() {
 
 
             // Deviasi
-            cout << Color::CYAN << "Standar deviasi sampel: " << Color::RESET << endl;
-            cout << "Deviasi: rerata            = Jumlah Data /  Banyak Data\n";
-            cout << "Deviasi: ketidakpastian    = sqrt((1/Banyak Data - 1)*(Jumlah Data * Jumlah Data))\n";
+            cout << Color::CYAN << "Metode Standar Deviasi Sampel: " << Color::RESET << endl;
+            cout << "Rerata         =   Jumlah Data /  Banyak Data\n";
+            cout << "Ketidakpastian =   sqrt(1/(n-1) * Sigma((rerata_x - x)^2))\n";
             ketidakpastianDeviasi = standart_Deviation_Sample(vectorValue, &rerataDeviasi);
             
             strKetidakpastian = to_string(ketidakpastianDeviasi);
@@ -134,7 +136,7 @@ int main() {
         
         // Ketidakpastian gabungan
         case 3:
-            //* Hanya tuhan yang tahu cara ini bekerja
+            //* Hanya Tuhan yang tahu cara ini bekerja
             cout << "Jika operasinya + atau - maka ketidakpastiannya adalah hasil jumlah dari ketidakpastian mutlaknya\n";
             cout << "Jika operasinya * atau / maka ketidakpastiannya adalah jumlah dari ketidakpastian relatifnya\n";
             calculateUncertaintyCombined();
@@ -152,26 +154,31 @@ int main() {
             break;
 
         case 5:
+            cout << Color::BG_CYAN << "Website Version" << Color::RESET << endl;
+            cout << Color::UNDERLINE << "https://www.calc-ketidakpastian.github.io";
+
             cout << Color::BG_CYAN << "Tutorial:" << Color::RESET << endl;
-            cout << "Docs & Source: " << Color::UNDERLINE << "github.com/not-robot-49/calc-ketidakpastian" << Color::RESET << endl;
-            cout << "YT: " << Color::UNDERLINE << "link youtube" << Color::RESET << endl;
+            cout << "Docs & Source: " << Color::UNDERLINE << "https://www.github.com/daffa-satya/calc-ketidakpastian" << Color::RESET << endl;
+            cout << "YT: " << Color::UNDERLINE << "https://youtu.be/XMd9OHRa0_U?si=HGxxN93E5yv_9Lfm" << Color::RESET << endl;
 
 
             cout << endl << Color::BG_CYAN << "Made With love <3 and glued with hope by" << Color::RESET << endl;
-            cout << "Daffa Satya (Creator) , Raihan Altaf (Co Creator), & Joshua Leonardo (Co Creator)" << endl;
+            cout << "XG04 Daffa, XG29 Raihan, dan XG10 Joshua" << endl;
+            cout << "Disupervisi oleh guru Fisika SMAN 70, Pak Ikhwan" << endl;
             cout << Color::YELLOW << Color::BOLD << "-----(7027)-----" << Color::RESET << endl;
             cout << endl;
 
             cout << Color::BG_CYAN << "Contact:" << Color::RESET << endl; 
             cout << "ig: " << Color::BLUE << "@sat1rya" << Color::RESET << " / " << Color::BLUE << "@rhn.alt" << Color::RESET << " / " << Color::BLUE << "@joshua_leonardo_" << Color::RESET << endl;
-            cout << "github: " << Color::UNDERLINE << "github.com/not-robot-49" << Color::RESET << " atau " << Color::UNDERLINE << "github.com/badutpenusuk" << Color::RESET << endl;
+            cout << "github: " << Color::UNDERLINE << "https://www.github.com/daffa-satya" << Color::RESET << " atau " << Color::UNDERLINE << "https://www.github.com/badutpenusuk" << Color::RESET << endl;
             
-            cout << endl << Color::BG_MAGENTA << "Total hampir 1000 baris kode, walawe" << Color::RESET << endl << endl;
+            cout << endl << "SMAN 70 || Sekolah Penggerak || Sekolah Ramah Anak" << endl << endl;
         default:
             break;
         }
         cout << endl;
     }
+    cout << "SMAN 70 || Sekolah Penggerak || Sekolah Ramah Anak" << endl;
     cout << "---------------Terimakasih :)--------------------";
     cout << Color::RESET << endl;
     return 0;

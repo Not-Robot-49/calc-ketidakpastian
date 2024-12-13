@@ -149,10 +149,6 @@ void pembulatan_AP(std::string &s, int jumlahAP) {
 
 void pembulatan_Presisi(std::string &s, int presisi) {
 
-
-
-
-
     int letakDesimal = s.find('.');
     int i = 0;
     
@@ -185,7 +181,7 @@ void pembulatan_Presisi(std::string &s, int presisi) {
         s[i] = '0';
     }
     // Pembulatan jika sama dengan 50
-    else if (s[i] == '5' && (s[i+1] == '0' || s[i+1] == '\0')) {
+    else if ((s[i] == '5' && (s[i+1] == '0' || s[i+1] == '\0')) || (s[i] == '5' && ((s[i+1] == '.' && s[i+2] == '0')|| s[i+2] == '\0'))) {
         if ((s[i -1] - '0') % 2 == 1) {
             s[i-1] += 1;
         }
@@ -232,5 +228,17 @@ void pembulatan_Presisi(std::string &s, int presisi) {
 
     while (hitung_Presisi(s, INT_MIN) > presisi && presisi > 0) {
         s.pop_back();
+    }
+
+    for (int j = s.length(); j > 0; j--) {
+        if (s[j] == ':' && j > 0) {
+            s[j] = '0';
+            s[j-1]++;
+        }
+    }
+
+    if(s[0] == ':') {
+        s[0] = '0';
+        s.insert(s.begin(), '1');
     }
 }
